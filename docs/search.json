@@ -1,0 +1,30 @@
+[
+  {
+    "objectID": "Data_Science.html#what-differencessimilarities-do-you-see-between-data-scientists-and-statisticians",
+    "href": "Data_Science.html#what-differencessimilarities-do-you-see-between-data-scientists-and-statisticians",
+    "title": "Data Science",
+    "section": "What differences/similarities do you see between data scientists and statisticians?",
+    "text": "What differences/similarities do you see between data scientists and statisticians?\nDifferences: - … - …\nSimilarities: - … - …"
+  },
+  {
+    "objectID": "Data_Science.html#how-do-you-view-yourself-in-relation-to-these-two-areas",
+    "href": "Data_Science.html#how-do-you-view-yourself-in-relation-to-these-two-areas",
+    "title": "Data Science",
+    "section": "How do you view yourself in relation to these two areas?",
+    "text": "How do you view yourself in relation to these two areas?"
+  },
+  {
+    "objectID": "Data_Science.html#setting-y-variable-to-be-a-column-of-the-iris-dataset",
+    "href": "Data_Science.html#setting-y-variable-to-be-a-column-of-the-iris-dataset",
+    "title": "Data Science",
+    "section": "Setting y variable to be a column of the iris dataset",
+    "text": "Setting y variable to be a column of the iris dataset\n\ny &lt;- density(iris$Petal.Width)"
+  },
+  {
+    "objectID": "Data_Science.html#checking-the-class-type-and-structure-of-y",
+    "href": "Data_Science.html#checking-the-class-type-and-structure-of-y",
+    "title": "Data Science",
+    "section": "Checking the class, type, and structure of y",
+    "text": "Checking the class, type, and structure of y\n\nclass(y)\n\n[1] \"density\"\n\ntypeof(y)\n\n[1] \"list\"\n\nstr(y)\n\nList of 8\n $ x         : num [1:512] -0.656 -0.648 -0.64 -0.633 -0.625 ...\n $ y         : num [1:512] 0.00161 0.00178 0.00197 0.00217 0.00239 ...\n $ bw        : num 0.252\n $ n         : int 150\n $ old.coords: logi FALSE\n $ call      : language density.default(x = iris$Petal.Width)\n $ data.name : chr \"iris$Petal.Width\"\n $ has.na    : logi FALSE\n - attr(*, \"class\")= chr \"density\"\n\n\n\nplot(y)"
+  }
+]

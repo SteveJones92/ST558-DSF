@@ -1,0 +1,37 @@
+---
+title: "Data Science"
+format: html
+editor: visual
+---
+
+## What do you think being a data scientist is about?
+
+## What differences/similarities do you see between data scientists and statisticians?
+
+Differences:
+- ...
+- ...
+
+Similarities:
+- ...
+- ...
+
+## How do you view yourself in relation to these two areas?
+
+
+## Setting y variable to be a column of the iris dataset
+```{r}
+y <- density(iris$Petal.Width)
+```
+
+## Checking the class, type, and structure of y
+```{r}
+class(y)
+typeof(y)
+str(y)
+```
+
+
+```{r}
+plot(y)
+```
