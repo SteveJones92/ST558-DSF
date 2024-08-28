@@ -4,34 +4,53 @@ format: html
 editor: visual
 ---
 
-## What do you think being a data scientist is about?
+<hr style="border: 3px solid black;" />
 
-## What differences/similarities do you see between data scientists and statisticians?
+### What do you think being a data scientist is about?
 
-Differences:
-- ...
-- ...
+A data scientist is someone who focuses on the process of integrating computers with statistics and business needs. They have a specialization of computing software to be able to gain insights from data, many times in an automated fashion for use with software.
+
+### What differences/similarities do you see between data scientists and statisticians?
+
+I view it as starting on the same path and diverging at some point. The root is in statistics, but a statistician will continue with more of the rigor of the field directly, whereas a data scientist will begin to branch off more into the software/development process and application side of things.
 
 Similarities:
-- ...
-- ...
 
-## How do you view yourself in relation to these two areas?
+-   Foundational Knowledge
+-   Tool Use
 
+Differences:
 
-## Setting y variable to be a column of the iris dataset
+-   Specialized Knowledge
+-   Development Process
+
+### How do you view yourself in relation to these two areas?
+
+I am much closer to a data scientist. I have exposure to statistics, but as portions of CSC courses. I have had many courses on directly attributed data science topics and I work in software.
+
+<hr style="border: 3px solid black;" />
+
+#### Setting y variable using a column of the iris dataset and density function
+
 ```{r}
 y <- density(iris$Petal.Width)
 ```
 
-## Checking the class, type, and structure of y
+<br>
+
+#### Checking the class, type, and structure of y
+
 ```{r}
+#| results: asis
 class(y)
 typeof(y)
 str(y)
 ```
 
+<br>
 
+#### Plotting y, with code hidden with echo=FALSE
 ```{r}
+#| echo=FALSE
 plot(y)
 ```

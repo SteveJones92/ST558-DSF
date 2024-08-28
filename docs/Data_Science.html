@@ -133,50 +133,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="what-do-you-think-being-a-data-scientist-is-about" class="level2">
-<h2 class="anchored" data-anchor-id="what-do-you-think-being-a-data-scientist-is-about">What do you think being a data scientist is about?</h2>
+<hr style="border: 3px solid black;">
+<section id="what-do-you-think-being-a-data-scientist-is-about" class="level3">
+<h3 class="anchored" data-anchor-id="what-do-you-think-being-a-data-scientist-is-about">What do you think being a data scientist is about?</h3>
+<p>A data scientist is someone who focuses on the process of integrating computers with statistics and business needs. They have a specialization of computing software to be able to gain insights from data, many times in an automated fashion for use with software.</p>
 </section>
-<section id="what-differencessimilarities-do-you-see-between-data-scientists-and-statisticians" class="level2">
-<h2 class="anchored" data-anchor-id="what-differencessimilarities-do-you-see-between-data-scientists-and-statisticians">What differences/similarities do you see between data scientists and statisticians?</h2>
-<p>Differences: - … - …</p>
-<p>Similarities: - … - …</p>
+<section id="what-differencessimilarities-do-you-see-between-data-scientists-and-statisticians" class="level3">
+<h3 class="anchored" data-anchor-id="what-differencessimilarities-do-you-see-between-data-scientists-and-statisticians">What differences/similarities do you see between data scientists and statisticians?</h3>
+<p>I view it as starting on the same path and diverging at some point. The root is in statistics, but a statistician will continue with more of the rigor of the field directly, whereas a data scientist will begin to branch off more into the software/development process and application side of things.</p>
+<p>Similarities:</p>
+<ul>
+<li>Foundational Knowledge</li>
+<li>Tool Use</li>
+</ul>
+<p>Differences:</p>
+<ul>
+<li>Specialized Knowledge</li>
+<li>Development Process</li>
+</ul>
 </section>
-<section id="how-do-you-view-yourself-in-relation-to-these-two-areas" class="level2">
-<h2 class="anchored" data-anchor-id="how-do-you-view-yourself-in-relation-to-these-two-areas">How do you view yourself in relation to these two areas?</h2>
-</section>
-<section id="setting-y-variable-to-be-a-column-of-the-iris-dataset" class="level2">
-<h2 class="anchored" data-anchor-id="setting-y-variable-to-be-a-column-of-the-iris-dataset">Setting y variable to be a column of the iris dataset</h2>
+<section id="how-do-you-view-yourself-in-relation-to-these-two-areas" class="level3">
+<h3 class="anchored" data-anchor-id="how-do-you-view-yourself-in-relation-to-these-two-areas">How do you view yourself in relation to these two areas?</h3>
+<p>I am much closer to a data scientist. I have exposure to statistics, but as portions of CSC courses. I have had many courses on directly attributed data science topics and I work in software.</p>
+<hr style="border: 3px solid black;">
+<section id="setting-y-variable-using-a-column-of-the-iris-dataset-and-density-function" class="level4">
+<h4 class="anchored" data-anchor-id="setting-y-variable-using-a-column-of-the-iris-dataset-and-density-function">Setting y variable using a column of the iris dataset and density function</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">density</span>(iris<span class="sc">$</span>Petal.Width)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p><br></p>
 </section>
-<section id="checking-the-class-type-and-structure-of-y" class="level2">
-<h2 class="anchored" data-anchor-id="checking-the-class-type-and-structure-of-y">Checking the class, type, and structure of y</h2>
-<div class="cell">
+<section id="checking-the-class-type-and-structure-of-y" class="level4">
+<h4 class="anchored" data-anchor-id="checking-the-class-type-and-structure-of-y">Checking the class, type, and structure of y</h4>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "density"</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "list"</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>List of 8
- $ x         : num [1:512] -0.656 -0.648 -0.64 -0.633 -0.625 ...
- $ y         : num [1:512] 0.00161 0.00178 0.00197 0.00217 0.00239 ...
- $ bw        : num 0.252
- $ n         : int 150
- $ old.coords: logi FALSE
- $ call      : language density.default(x = iris$Petal.Width)
- $ data.name : chr "iris$Petal.Width"
- $ has.na    : logi FALSE
- - attr(*, "class")= chr "density"</code></pre>
-</div>
-</div>
+<p>[1] “density”</p>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>[1] “list”</p>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>List of 8 $ x : num [1:512] -0.656 -0.648 -0.64 -0.633 -0.625 … $ y : num [1:512] 0.00161 0.00178 0.00197 0.00217 0.00239 … $ bw : num 0.252 $ n : int 150 $ old.coords: logi FALSE $ call : language density.default(x = iris$Petal.Width) $ data.name : chr “iris$Petal.Width” $ has.na : logi FALSE - attr(*, “class”)= chr “density”</p>
+<p><br></p>
+</section>
+<section id="plotting-y-with-code-hidden-with-echofalse" class="level4">
+<h4 class="anchored" data-anchor-id="plotting-y-with-code-hidden-with-echofalse">Plotting y, with code hidden with echo=FALSE</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -187,6 +186,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
