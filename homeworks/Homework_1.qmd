@@ -1,7 +1,7 @@
 ---
-title: "Data Science"
+title: "Homework 1"
 format: html
-editor: visual
+editor: source
 ---
 
 <hr style="border: 3px solid black;" />
@@ -41,7 +41,6 @@ y <- density(iris$Petal.Width)
 #### Checking the class, type, and structure of y
 
 ```{r}
-#| results: asis
 class(y)
 typeof(y)
 str(y)
@@ -50,6 +49,7 @@ str(y)
 <br>
 
 #### Plotting y, with code hidden with echo=FALSE
+
 ```{r}
 #| echo=FALSE
 plot(y)

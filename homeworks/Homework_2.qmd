@@ -1,0 +1,45 @@
+---
+title: "Homework 2"
+format: html
+editor: source
+---
+
+<hr style="border: 3px solid black;" />
+
+## Task 1: Basic Vector Practice
+
+```{r}
+pre_treatment <- c(120, 151, 125, 126, 115, 132, 132, 129, 134, 139, 127, 122, 127, 135, 133, 128, 147, 138, 140, 132)
+
+post_treatment <- c(127, 145, 135, 122, 115, 122, 123, 126, 126, 129, 132, 146, 120, 114, 121, 120, 128, 120, 133, 115)
+```
+
+```{r}
+names(pre_treatment) <- paste("Subject", 1:length(pre_treatment), sep = "_")
+names(post_treatment) <- paste("Subject", 1:length(post_treatment), sep = "_")
+
+pre_treatment
+post_treatment
+```
+
+```{r}
+delta <- pre_treatment - post_treatment
+```
+
+```{r}
+mean(delta)
+```
+
+```{r}
+decrease <- names(which(delta < 0))
+decrease
+```
+
+```{r}
+increase <- delta[delta > 0]
+increase
+```
+```{r}
+mean(delta[delta < 0])
+```
+

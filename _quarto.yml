@@ -1,3 +1,9 @@
 project:
   type: website
   output-dir: docs
+
+website:
+  navbar:
+    left:
+      - homeworks/Homework_1.qmd
+      - homeworks/Homework_2.qmd
