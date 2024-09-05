@@ -486,24 +486,22 @@ Subject_20
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">row.names =</span> <span class="cn">NULL</span></span>
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>diff_bp <span class="ot">&lt;-</span> df<span class="sc">$</span>pre_bp <span class="sc">-</span> df<span class="sc">$</span>post_bp</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span><span class="st">"post_bp &lt; 20"</span> <span class="ot">&lt;-</span> df<span class="sc">$</span>post_bp <span class="sc">&lt;</span> <span class="dv">120</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span><span class="st">"post_bp &lt; 120"</span> <span class="ot">&lt;-</span> df<span class="sc">$</span>post_bp <span class="sc">&lt;</span> <span class="dv">120</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="at">data_subj =</span> <span class="fu">head</span>(data, <span class="dv">2</span>), <span class="at">df_subj =</span> <span class="fu">head</span>(df, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    patient pre_bp post_bp diff_bp post_bp &lt; 120
-1 Subject_1    120     127      -7         FALSE</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>    patient pre_bp post_bp diff_bp post_bp &lt; 20
-1 Subject_1    138     105      33         TRUE</code></pre>
+<pre><code>              patient pre_bp post_bp diff_bp post_bp &lt; 120
+data_subj.1 Subject_1    120     127      -7         FALSE
+data_subj.2 Subject_2    151     145       6         FALSE
+df_subj.1   Subject_1    138     105      33          TRUE
+df_subj.2   Subject_2    135     136      -1         FALSE</code></pre>
 </div>
 </div>
 </section>
 <section id="store-the-2-data-frames-into-a-list." class="level4">
 <h4 class="anchored" data-anchor-id="store-the-2-data-frames-into-a-list.">2. Store the 2 data frames into a list.</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>my_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">treatment=</span>data, <span class="at">placebo=</span>df)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>my_list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>my_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">treatment=</span>data, <span class="at">placebo=</span>df)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>my_list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$treatment
       patient pre_bp post_bp diff_bp post_bp &lt; 120
@@ -529,24 +527,24 @@ Subject_20
 20 Subject_20    132     115      17          TRUE
 
 $placebo
-      patient pre_bp post_bp diff_bp post_bp &lt; 20
-1   Subject_1    138     105      33         TRUE
-2   Subject_2    135     136      -1        FALSE
-3   Subject_3    147     123      24        FALSE
-4   Subject_4    117     130     -13        FALSE
-5   Subject_5    152     134      18        FALSE
-6   Subject_6    134     143      -9        FALSE
-7   Subject_7    114     135     -21        FALSE
-8   Subject_8    121     139     -18        FALSE
-9   Subject_9    131     120      11        FALSE
-10 Subject_10    130     124       6        FALSE</code></pre>
+      patient pre_bp post_bp diff_bp post_bp &lt; 120
+1   Subject_1    138     105      33          TRUE
+2   Subject_2    135     136      -1         FALSE
+3   Subject_3    147     123      24         FALSE
+4   Subject_4    117     130     -13         FALSE
+5   Subject_5    152     134      18         FALSE
+6   Subject_6    134     143      -9         FALSE
+7   Subject_7    114     135     -21         FALSE
+8   Subject_8    121     139     -18         FALSE
+9   Subject_9    131     120      11         FALSE
+10 Subject_10    130     124       6         FALSE</code></pre>
 </div>
 </div>
 </section>
 <section id="access-the-first-item-3-different-ways." class="level4">
 <h4 class="anchored" data-anchor-id="access-the-first-item-3-different-ways.">3. Access the first item 3 different ways.</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(my_list[<span class="dv">1</span>], <span class="dv">1</span>) <span class="co"># keeps as list (will show entire item)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(my_list[<span class="dv">1</span>], <span class="dv">1</span>) <span class="co"># keeps as list (will show entire item)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$treatment
       patient pre_bp post_bp diff_bp post_bp &lt; 120
@@ -571,12 +569,12 @@ $placebo
 19 Subject_19    140     133       7         FALSE
 20 Subject_20    132     115      17          TRUE</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(my_list[[<span class="dv">1</span>]], <span class="dv">1</span>) <span class="co"># grabs the value at the list position, giving a dataframe - head prints out the first item of df</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(my_list[[<span class="dv">1</span>]], <span class="dv">1</span>) <span class="co"># grabs the value at the list position, giving a dataframe - head prints out the first item of df</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    patient pre_bp post_bp diff_bp post_bp &lt; 120
 1 Subject_1    120     127      -7         FALSE</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(my_list<span class="sc">$</span>treatment, <span class="dv">1</span>) <span class="co"># same thing, different way of getting the dataframe</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(my_list<span class="sc">$</span>treatment, <span class="dv">1</span>) <span class="co"># same thing, different way of getting the dataframe</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    patient pre_bp post_bp diff_bp post_bp &lt; 120
 1 Subject_1    120     127      -7         FALSE</code></pre>
@@ -586,7 +584,7 @@ $placebo
 <section id="from-list-created-in-question-2-access-pre_bp-column-of-placebo-list-data.-maintaining-as-df-column-as-opposed-to-pre_bp-vector." class="level4">
 <h4 class="anchored" data-anchor-id="from-list-created-in-question-2-access-pre_bp-column-of-placebo-list-data.-maintaining-as-df-column-as-opposed-to-pre_bp-vector.">4. From list created in question 2, access pre_bp column of placebo list data. Maintaining as df column, as opposed to $pre_bp vector.</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>my_list<span class="sc">$</span>placebo[<span class="st">"pre_bp"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>my_list<span class="sc">$</span>placebo[<span class="st">"pre_bp"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   pre_bp
 1     138

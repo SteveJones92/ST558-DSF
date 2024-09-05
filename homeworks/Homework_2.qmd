@@ -103,9 +103,8 @@ df <- data.frame(
   row.names = NULL
 )
 df$diff_bp <- df$pre_bp - df$post_bp
-df$"post_bp < 20" <- df$post_bp < 120
-head(data, 1)
-head(df, 1)
+df$"post_bp < 120" <- df$post_bp < 120
+rbind(data_subj = head(data, 2), df_subj = head(df, 2))
 ```
 
 #### 2. Store the 2 data frames into a list.
