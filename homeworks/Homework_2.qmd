@@ -8,11 +8,15 @@ editor: source
 
 ## Task 1: Basic Vector Practice
 
+#### 1. Pre and Post treatment vectors
+
 ```{r}
 pre_treatment <- c(120, 151, 125, 126, 115, 132, 132, 129, 134, 139, 127, 122, 127, 135, 133, 128, 147, 138, 140, 132)
 
 post_treatment <- c(127, 145, 135, 122, 115, 122, 123, 126, 126, 129, 132, 146, 120, 114, 121, 120, 128, 120, 133, 115)
 ```
+
+#### 2. Renamed each
 
 ```{r}
 names(pre_treatment) <- paste("Subject", 1:length(pre_treatment), sep = "_")
@@ -22,24 +26,103 @@ pre_treatment
 post_treatment
 ```
 
+#### 3. Difference from pre -> post treatment
+
 ```{r}
 delta <- pre_treatment - post_treatment
 ```
+
+#### 4. Average change - positive value (positive outcome, blood pressure decreased on average by this amount)
 
 ```{r}
 mean(delta)
 ```
 
+#### 5. Which subjects had a decreased blood pressure?
+
 ```{r}
-decrease <- names(which(delta < 0))
+decrease <- names(which(delta > 0))
 decrease
 ```
 
+#### 6. Which subjects had an decrease in blood pressure ( positive change, but as a subset vector)?
+
 ```{r}
-increase <- delta[delta > 0]
-increase
+decrease_vector <- delta[delta > 0]
+decrease_vector
 ```
+
+#### 7. What is the average decrease of blood pressure of those that had the positive change?
+
 ```{r}
-mean(delta[delta < 0])
+mean(decrease_vector)
+```
+
+<hr style="border: 3px solid black;" />
+
+## Task 2: Basic Data Frame Practice
+
+#### 1. Create dataframe
+```{r}
+data <- data.frame(
+  patient = names(pre_treatment),
+  pre_bp = pre_treatment,
+  post_bp = post_treatment,
+  diff_bp = delta,
+  row.names=NULL
+)
+head(data, 1)
+```
+
+#### 2. Show where diff_bp is negative
+```{r}
+data[data$diff_bp < 0,]
+```
+
+#### 3. Add new column where post_bp is less than 120 (T/F)
+```{r}
+data$"post_bp < 120" = data$post_bp < 120
+data
+```
+
+#### 4. Pretty print view using provided function
+```{r}
+knitr::kable(data, align='c', caption = "Patient Treatment BP effect")
+```
+
+<hr style="border: 3px solid black;" />
+
+## Task 3: List Practice
+
+#### 1. Create similar dataframe to Task 2
+```{r}
+df <- data.frame(
+  patient = paste("Subject", 1:10, sep = "_"),
+  pre_bp = c(138, 135, 147, 117, 152, 134, 114, 121, 131, 130),
+  post_bp = c(105, 136, 123, 130, 134, 143, 135, 139, 120, 124),
+  row.names = NULL
+)
+df$diff_bp <- df$pre_bp - df$post_bp
+df$"post_bp < 20" <- df$post_bp < 120
+head(data, 1)
+head(df, 1)
+```
+
+#### 2. Store the 2 data frames into a list.
+```{r}
+my_list <- list(treatment=data, placebo=df)
+my_list
+```
+
+#### 3. Access the first item 3 different ways.
+```{r}
+head(my_list[1], 1) # keeps as list (will show entire item)
+head(my_list[[1]], 1) # grabs the value at the list position, giving a dataframe - head prints out the first item of df
+head(my_list$treatment, 1) # same thing, different way of getting the dataframe
+```
+
+#### 4. From list created in question 2, access pre_bp column of placebo list data. Maintaining as df column, as opposed to $pre_bp vector.
+```{r}
+my_list$placebo["pre_bp"]
 ```
 
