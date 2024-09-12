@@ -1,0 +1,87 @@
+---
+title: "Homework 3"
+format: html
+editor: source
+---
+
+<hr style="border: 3px solid black;" />
+
+## Load data from data folder
+```{r}
+load("../data/hw3/hw2_list.rda")
+```
+
+<hr style="border: 3px solid black;" />
+
+## Task 1: Control Flow Practice
+
+#### Create the status column in both.
+```{r}
+bp_list$treatment$status <- character(nrow(bp_list$treatment))
+bp_list$placebo$status <- character(nrow(bp_list$placebo))
+```
+
+#### Fill the treatment with appropriate strings for status
+```{r}
+for (i in 1:nrow(bp_list$treatment)) {
+  val <- bp_list$treatment[i, "post_bp"]
+  bp_str <- ""
+  if (val <= 120) {
+    bp_str <- "optimal"
+  } else if (val <= 130) {
+    bp_str <- "borderline"
+  } else {
+    bp_str <- "high"
+  }
+  bp_list$treatment[i, "status"] <- bp_str
+}
+bp_list$treatment$status
+```
+
+#### Fill the placebo with the appropriate string for status
+```{r}
+bp_list$placebo$status <- ifelse(bp_list$placebo$post_bp <= 120, "optimal", ifelse(bp_list$placebo$post_bp <= 130, "borderline", "high"))
+bp_list$placebo$status
+```
+
+
+## Task 2: Function Writing
+
+#### Build a useful function for the previous usage
+```{r}
+my_func <- function(lst, summary_func="mean") {
+  # lst needs to be a list with 2 dataframes
+  if (!all(is.list(lst), length(lst) == 2, all(sapply(lst, is.data.frame)))) {
+    stop("Not a list of 2 data frames")
+  }
+  # summary_func needs to be one of a set of summary functions (var, sd, min, max, mean)
+  summary_funcs <- c("var", "sd", "min", "max", "mean")
+  if (!(summary_func %in% summary_funcs)) {
+    stop("Not a function")
+  }
+  summary_function <- get(summary_func)
+  
+  # lists need to contain pre, post, and diff columns
+  cols <- c("pre_bp", "post_bp", "diff_bp")
+  if (!all(sapply(lst, function(df) all(cols %in% colnames(df))))) {
+    stop("Dataframes don't have the required columns of pre_bp, post_bp, and diff_bp")
+  }
+  
+  return(lapply(lst, function(df) {
+    result <-sapply(df[cols], summary_function)
+    names(result) <- paste(names(result), summary_func, sep="_")
+    return(result)
+  }))
+}
+```
+
+#### Apply the function to bp_list with default param, and the other summary funcs
+```{r}
+print("default: mean")
+my_func(bp_list)
+for (summary_func in c("var", "sd", "min", "max")) {
+  print(summary_func)
+  print(my_func(bp_list, summary_func))
+}
+```
+

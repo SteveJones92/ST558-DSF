@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Homework 1</title>
+<title>Homework 3</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -117,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="../homeworks/Homework_1.html" aria-current="page"> 
+    <a class="nav-link" href="../homeworks/Homework_1.html"> 
 <span class="menu-text">Homework 1</span></a>
   </li>  
   <li class="nav-item">
@@ -125,7 +125,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Homework 2</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../homeworks/Homework_3.html"> 
+    <a class="nav-link active" href="../homeworks/Homework_3.html" aria-current="page"> 
 <span class="menu-text">Homework 3</span></a>
   </li>  
 </ul>
@@ -145,7 +145,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Homework 1</h1>
+<h1 class="title">Homework 3</h1>
 </div>
 
 
@@ -163,71 +163,146 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <hr style="border: 3px solid black;">
-<section id="what-do-you-think-being-a-data-scientist-is-about" class="level3">
-<h3 class="anchored" data-anchor-id="what-do-you-think-being-a-data-scientist-is-about">What do you think being a data scientist is about?</h3>
-<p>A data scientist is someone who focuses on the process of integrating computers with statistics and business needs. They have a specialization of computing software to be able to gain insights from data, many times in an automated fashion for use with software.</p>
-</section>
-<section id="what-differencessimilarities-do-you-see-between-data-scientists-and-statisticians" class="level3">
-<h3 class="anchored" data-anchor-id="what-differencessimilarities-do-you-see-between-data-scientists-and-statisticians">What differences/similarities do you see between data scientists and statisticians?</h3>
-<p>I view it as starting on the same path and diverging at some point. The root is in statistics, but a statistician will continue with more of the rigor of the field directly, whereas a data scientist will begin to branch off more into the software/development process and application side of things.</p>
-<p>Similarities:</p>
-<ul>
-<li>Foundational Knowledge</li>
-<li>Tool Use</li>
-</ul>
-<p>Differences:</p>
-<ul>
-<li>Specialized Knowledge</li>
-<li>Development Process</li>
-</ul>
-</section>
-<section id="how-do-you-view-yourself-in-relation-to-these-two-areas" class="level3">
-<h3 class="anchored" data-anchor-id="how-do-you-view-yourself-in-relation-to-these-two-areas">How do you view yourself in relation to these two areas?</h3>
-<p>I am much closer to a data scientist. I have exposure to statistics, but as portions of CSC courses. I have had many courses on directly attributed data science topics and I work in software.</p>
+<section id="load-data-from-data-folder" class="level2">
+<h2 class="anchored" data-anchor-id="load-data-from-data-folder">Load data from data folder</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"../data/hw3/hw2_list.rda"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <hr style="border: 3px solid black;">
-<section id="setting-y-variable-using-a-column-of-the-iris-dataset-and-density-function" class="level4">
-<h4 class="anchored" data-anchor-id="setting-y-variable-using-a-column-of-the-iris-dataset-and-density-function">Setting y variable using a column of the iris dataset and density function</h4>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">density</span>(iris<span class="sc">$</span>Petal.Width)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><br></p>
 </section>
-<section id="checking-the-class-type-and-structure-of-y" class="level4">
-<h4 class="anchored" data-anchor-id="checking-the-class-type-and-structure-of-y">Checking the class, type, and structure of y</h4>
+<section id="task-1-control-flow-practice" class="level2">
+<h2 class="anchored" data-anchor-id="task-1-control-flow-practice">Task 1: Control Flow Practice</h2>
+<section id="create-the-status-column-in-both." class="level4">
+<h4 class="anchored" data-anchor-id="create-the-status-column-in-both.">Create the status column in both.</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "density"</code></pre>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>bp_list<span class="sc">$</span>treatment<span class="sc">$</span>status <span class="ot">&lt;-</span> <span class="fu">character</span>(<span class="fu">nrow</span>(bp_list<span class="sc">$</span>treatment))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>bp_list<span class="sc">$</span>placebo<span class="sc">$</span>status <span class="ot">&lt;-</span> <span class="fu">character</span>(<span class="fu">nrow</span>(bp_list<span class="sc">$</span>placebo))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "list"</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>List of 8
- $ x         : num [1:512] -0.656 -0.648 -0.64 -0.633 -0.625 ...
- $ y         : num [1:512] 0.00161 0.00178 0.00197 0.00217 0.00239 ...
- $ bw        : num 0.252
- $ n         : int 150
- $ old.coords: logi FALSE
- $ call      : language density.default(x = iris$Petal.Width)
- $ data.name : chr "iris$Petal.Width"
- $ has.na    : logi FALSE
- - attr(*, "class")= chr "density"</code></pre>
-</div>
-</div>
-<p><br></p>
 </section>
-<section id="plotting-y-with-code-hidden-with-echofalse" class="level4">
-<h4 class="anchored" data-anchor-id="plotting-y-with-code-hidden-with-echofalse">Plotting y, with code hidden with echo=FALSE</h4>
+<section id="fill-the-treatment-with-appropriate-strings-for-status" class="level4">
+<h4 class="anchored" data-anchor-id="fill-the-treatment-with-appropriate-strings-for-status">Fill the treatment with appropriate strings for status</h4>
 <div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Homework_1_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(bp_list<span class="sc">$</span>treatment)) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  val <span class="ot">&lt;-</span> bp_list<span class="sc">$</span>treatment[i, <span class="st">"post_bp"</span>]</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  bp_str <span class="ot">&lt;-</span> <span class="st">""</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (val <span class="sc">&lt;=</span> <span class="dv">120</span>) {</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    bp_str <span class="ot">&lt;-</span> <span class="st">"optimal"</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (val <span class="sc">&lt;=</span> <span class="dv">130</span>) {</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    bp_str <span class="ot">&lt;-</span> <span class="st">"borderline"</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    bp_str <span class="ot">&lt;-</span> <span class="st">"high"</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  bp_list<span class="sc">$</span>treatment[i, <span class="st">"status"</span>] <span class="ot">&lt;-</span> bp_str</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>bp_list<span class="sc">$</span>treatment<span class="sc">$</span>status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "borderline" "high"       "high"       "borderline" "optimal"   
+ [6] "borderline" "borderline" "borderline" "borderline" "borderline"
+[11] "high"       "high"       "optimal"    "optimal"    "borderline"
+[16] "optimal"    "borderline" "optimal"    "high"       "optimal"   </code></pre>
 </div>
+</div>
+</section>
+<section id="fill-the-placebo-with-the-appropriate-string-for-status" class="level4">
+<h4 class="anchored" data-anchor-id="fill-the-placebo-with-the-appropriate-string-for-status">Fill the placebo with the appropriate string for status</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>bp_list<span class="sc">$</span>placebo<span class="sc">$</span>status <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(bp_list<span class="sc">$</span>placebo<span class="sc">$</span>post_bp <span class="sc">&lt;=</span> <span class="dv">120</span>, <span class="st">"optimal"</span>, <span class="fu">ifelse</span>(bp_list<span class="sc">$</span>placebo<span class="sc">$</span>post_bp <span class="sc">&lt;=</span> <span class="dv">130</span>, <span class="st">"borderline"</span>, <span class="st">"high"</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>bp_list<span class="sc">$</span>placebo<span class="sc">$</span>status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "optimal"    "high"       "borderline" "borderline" "high"      
+ [6] "high"       "high"       "high"       "optimal"    "borderline"</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="task-2-function-writing" class="level2">
+<h2 class="anchored" data-anchor-id="task-2-function-writing">Task 2: Function Writing</h2>
+<section id="build-a-useful-function-for-the-previous-usage" class="level4">
+<h4 class="anchored" data-anchor-id="build-a-useful-function-for-the-previous-usage">Build a useful function for the previous usage</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>my_func <span class="ot">&lt;-</span> <span class="cf">function</span>(lst, <span class="at">summary_func=</span><span class="st">"mean"</span>) {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># lst needs to be a list with 2 dataframes</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">all</span>(<span class="fu">is.list</span>(lst), <span class="fu">length</span>(lst) <span class="sc">==</span> <span class="dv">2</span>, <span class="fu">all</span>(<span class="fu">sapply</span>(lst, is.data.frame)))) {</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"Not a list of 2 data frames"</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># summary_func needs to be one of a set of summary functions (var, sd, min, max, mean)</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  summary_funcs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"var"</span>, <span class="st">"sd"</span>, <span class="st">"min"</span>, <span class="st">"max"</span>, <span class="st">"mean"</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>(summary_func <span class="sc">%in%</span> summary_funcs)) {</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"Not a function"</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  summary_function <span class="ot">&lt;-</span> <span class="fu">get</span>(summary_func)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># lists need to contain pre, post, and diff columns</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"pre_bp"</span>, <span class="st">"post_bp"</span>, <span class="st">"diff_bp"</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">all</span>(<span class="fu">sapply</span>(lst, <span class="cf">function</span>(df) <span class="fu">all</span>(cols <span class="sc">%in%</span> <span class="fu">colnames</span>(df))))) {</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"Dataframes don't have the required columns of pre_bp, post_bp, and diff_bp"</span>)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">lapply</span>(lst, <span class="cf">function</span>(df) {</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    result <span class="ot">&lt;-</span><span class="fu">sapply</span>(df[cols], summary_function)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">names</span>(result) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">names</span>(result), summary_func, <span class="at">sep=</span><span class="st">"_"</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(result)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  }))</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="apply-the-function-to-bp_list-with-default-param-and-the-other-summary-funcs" class="level4">
+<h4 class="anchored" data-anchor-id="apply-the-function-to-bp_list-with-default-param-and-the-other-summary-funcs">Apply the function to bp_list with default param, and the other summary funcs</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"default: mean"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "default: mean"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">my_func</span>(bp_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$treatment
+ pre_bp_mean post_bp_mean diff_bp_mean 
+      131.60       125.95         5.65 
+
+$placebo
+ pre_bp_mean post_bp_mean diff_bp_mean 
+       131.9        128.9          3.0 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (summary_func <span class="cf">in</span> <span class="fu">c</span>(<span class="st">"var"</span>, <span class="st">"sd"</span>, <span class="st">"min"</span>, <span class="st">"max"</span>)) {</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(summary_func)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">my_func</span>(bp_list, summary_func))</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "var"
+$treatment
+ pre_bp_var post_bp_var diff_bp_var 
+   75.72632    78.99737   117.81842 
+
+$placebo
+ pre_bp_var post_bp_var diff_bp_var 
+   149.8778    124.9889    341.3333 
+
+[1] "sd"
+$treatment
+ pre_bp_sd post_bp_sd diff_bp_sd 
+  8.702087   8.888046  10.854419 
+
+$placebo
+ pre_bp_sd post_bp_sd diff_bp_sd 
+  12.24246   11.17984   18.47521 
+
+[1] "min"
+$treatment
+ pre_bp_min post_bp_min diff_bp_min 
+        115         114         -24 
+
+$placebo
+ pre_bp_min post_bp_min diff_bp_min 
+        114         105         -21 
+
+[1] "max"
+$treatment
+ pre_bp_max post_bp_max diff_bp_max 
+        151         146          21 
+
+$placebo
+ pre_bp_max post_bp_max diff_bp_max 
+        152         143          33 </code></pre>
 </div>
 </div>
 
