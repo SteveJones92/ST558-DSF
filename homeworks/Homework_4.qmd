@@ -20,7 +20,7 @@ library(readxl)
 
 2.  What are the major benefits of using R projects?
 
-> R projects?
+> An R project allows creating a structured R directory that can be easier to work with and share with others. The entire directory can simply be loaded and ran by others.
 
 3.  What is git and what is github?
 
