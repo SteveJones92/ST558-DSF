@@ -1,0 +1,140 @@
+---
+title: "Homework_4"
+format: html
+editor: source
+---
+
+```{r}
+#| output: false
+library(tidyverse)
+library(readxl)
+```
+
+<hr style="border: 3px solid black;" />
+
+## Task 1: Conceptual Questions
+
+1.  If your working directory is `myfolder/homework/`, what relative path would you specify to get the file located at `myfolder/MyDate.csv`?
+
+> You would back out of the `/homework/` folder with `..` and you would be looking at the `myfolder` directory where `MyData.csv` is located.
+
+2.  What are the major benefits of using R projects?
+
+> R projects?
+
+3.  What is git and what is github?
+
+> git is version control. github is an online repository that uses git for version control. This allows for much better code and file editing that will preserve prior work and also allows collaborating with others much easier.
+
+4.  What are the two main differences between a tibble and a data.frame?
+
+> A data.frame is a BaseR structure. A tibble is tidyverse structure that is like a dataframe, but has more complaining and more limitations.
+
+5.  Rewrite the following nested function call, using BaseR's chaining operator:
+
+```         
+arrange(filter(select(as_tibble(iris), starts_with("Petal"), Species), Petal.Length < 1.55), Species)
+```
+
+```{r}
+iris |>
+  as_tibble() |>
+  select(starts_with("Petal"), Species) |>
+  filter(Petal.Length < 1.55) |>
+  arrange(Species)
+```
+
+<hr style="border: 3px solid black;" />
+
+## Task 2: Reading Delimited Data
+
+#### Glass Data
+Read in the csv file, adding the given column names.
+```{r}
+# glass_data <- read_csv("../data/hw4/glass.data", col_names = c("Id", "RI", "Na", "Mg", "Al", "Si", "K", "Ca", "Ba", "Fe"))
+glass_data <- read_csv("https://www4.stat.ncsu.edu/~online/datasets/glass.data", col_names = c("Id", "RI", "Na", "Mg", "Al", "Si", "K", "Ca", "Ba", "Fe", "Type"), show_col_types = FALSE)
+glass_data
+```
+Chain update the glass_data.
+```{r}
+glass_data_updated <- glass_data |>
+  mutate(Type = case_when(
+    Type == 1 ~ "building_windows_float_processed",
+    Type == 2 ~ "building_windows_non_float_processed",
+    Type == 3 ~ "vehicle_windows_float_processed",
+    Type == 4 ~ "vehicle_windows_non_float_processed",
+    Type == 5 ~ "containers",
+    Type == 6 ~ "tableware",
+    Type == 7 ~ "headlamps"
+  )) |>
+  filter(Fe < 0.2, Type %in% c("tableware", "headlamps"))
+glass_data_updated
+```
+
+#### Yeast Data
+Read in the fixed width file, adding given column names.
+```{r}
+# yeast_data <- read_fwf("../data/hw4/yeast.data", fwf_widths(c(12,6,6,6,6,6,6,6,6,6), c("seq_nam", "mcg", "gvh", "alm", "mit", "erl", "pox", "vac", "nuc", "class")))
+yeast_data <- read_fwf("https://www4.stat.ncsu.edu/~online/datasets/yeast.data", fwf_widths(c(12,6,6,6,6,6,6,6,6,6), c("seq_nam", "mcg", "gvh", "alm", "mit", "erl", "pox", "vac", "nuc", "class")), show_col_types = FALSE)
+yeast_data
+```
+Chain update the yeast_data.
+```{r}
+yeast_data_updated <- yeast_data |>
+  select(-seq_nam & -nuc) |>
+  group_by(class) |>
+  mutate(across(where(is.numeric), list(mean=mean, median=median), .names = "{.col}_{.fn}"))
+yeast_data_updated
+```
+
+<hr style="border: 3px solid black;" />
+
+## Task 3: Combining Excel and Delimited Data
+
+Read in the excel first sheet for white wine.
+```{r}
+white_wine_data <- read_excel("../data/hw4/white-wine.xlsx", sheet = 1)
+white_wine_data
+```
+
+Fix the column names from the second sheet.
+```{r}
+col_names <- read_excel("../data/hw4/white-wine.xlsx", sheet = 2) |> pull()
+colnames(white_wine_data) <- col_names
+white_wine_data
+```
+
+Add `white` column.
+```{r}
+white_wine_data$wine_type <- "white"
+```
+
+Read in delimited data for red wine.
+```{r}
+red_wine_data <- readr::read_delim("../data/hw4/red-wine.csv", delim=';', show_col_types = FALSE)
+red_wine_data
+```
+Update the column names and add the `red` column.
+```{r}
+colnames(red_wine_data) <- col_names
+red_wine_data$wine_type <- "red"
+red_wine_data
+```
+
+Combine the datasets into one wine dataset.
+```{r}
+wine_data <- dplyr::bind_rows(white_wine_data, red_wine_data)
+wine_data
+```
+
+Chain update new wine data.
+```{r}
+wine_data_updated <- wine_data |>
+  filter(quality > 6.5, alcohol < 132) |>
+  arrange(desc(quality)) |>
+  select(contains("acid"), alcohol, wine_type, quality) |>
+  group_by(quality) |>
+  mutate(across(where(is.numeric), list(mean=mean, stdev=sd), .names = "{.col}_{.fn}"))
+wine_data_updated
+```
+
