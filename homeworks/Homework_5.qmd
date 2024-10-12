@@ -1,0 +1,284 @@
+---
+title: "Homework 5"
+format: html
+editor: source
+---
+
+<hr style="border: 4px solid black;" />
+
+## Task 1: Read in the Data and Modify
+
+#### Reading in data
+1. Modify the provided code to read in the data and combine.
+2. Read in and combine using tidyverse and inner_join().
+```{r}
+#| file: ../src/hw5/read_data.R
+#| output: false
+```
+
+Modified code for reading in.
+```{r}
+str(read_method_1("../data/hw5/student-mat.csv", "../data/hw5/student-por.csv"))
+```
+
+Using inner_join() with all variables other than G1, G2, G3, paid, and absences.
+```{r}
+data <- read_method_2("../data/hw5/student-mat.csv", "../data/hw5/student-por.csv")
+str(data$combined, give.attr = FALSE)
+```
+
+<hr style="border: 2px solid black;" />
+
+> Note: When using the same variables from the given merge code, this is warning is seen.
+```
+Warning in inner_join(d1, d2, by = variables) :
+  Detected an unexpected many-to-many relationship between `x` and `y`.
+ℹ Row 79 of `x` matches multiple rows in `y`.
+ℹ Row 79 of `y` matches multiple rows in `x`.
+ℹ If a many-to-many relationship is expected, set `relationship = "many-to-many"` to silence this
+  warning.
+```
+
+This inner_join() creates way more data than expected or desired. This is because the data is not unique rows for that variable set. It is matching multiple rows from the other data set. Joining the data here means the student is likely the same student
+found in both data sets for different classes (they have the same attributes for things like age, sex, address, etc.). The given variables are fairly specific, but not enough to make the rows unique.
+
+<hr style="border: 2px solid black;" />
+
+#### For the math data, Portuguese, and combined, choose four categorical variables and convert those into factor variables.
+> Variables: "internet", "Pstatus", "famsize", "sex"
+
+```{r}
+variables_chosen <- c("internet", "Pstatus", "famsize", "sex")
+str(data$combined[,variables_chosen], give.attr = FALSE)
+data$d1 <- data$d1 |> mutate(across(all_of(variables_chosen), as.factor))
+data$d2 <- data$d2 |> mutate(across(all_of(variables_chosen), as.factor))
+data$combined <- data$combined |> mutate(across(all_of(variables_chosen), as.factor))
+str(data$combined[,variables_chosen], give.attr = FALSE)
+```
+
+<hr style="border: 4px solid black;" />
+
+## Task 2: Summarize the Data (Very Basic EDA)
+
+#### Look at how the data is stored and see if everything makes sense.
+<hr style="border: 2px solid black;" />
+Looking at students.txt from the zip file for further descriptions of the variables, we see:
+```{r}
+str(data$combined[c("Medu","Fedu","traveltime","studytime","failures","famrel","freetime","goout","Dalc","Walc","health","G1_math","G2_lang")])
+```
+
+- Medu/Fedu - Education levels that are bucketed (2 is 5th to 9th grade).
+- traveltime - Unequal bucketing of time data. It has 15 min intervals that switches to 30 minute interval, and finishes with a single value of 1 hour.
+- studytime - 1hr, 3hr, and 5hr intervals and a single value of 10hrs.
+- failures - n if 1<=n<3, else 4 (a lot of values are 0, so those are really 4)
+- famrel, freetime, goout, Dalc, Walc, health - these are ratings 1-5 and shouldn't be numerically summarized (a 1 and a 5 don't necessarily average to a 3, and two 1's from two people aren't necessarily the same)
+- G1, G2 - No issues, but for some reason the source site lists them as categorical
+
+#### Document the missing values in the data.
+<hr style="border: 2px solid black;" />
+The data claims to have no missing values on the source site.
+```{r}
+colSums(is.na(data$combined))
+```
+> It seems to check out, all 0's.
+
+#### Categorical Variables
+<hr style="border: 2px solid black;" />
+> Variables: "internet", "Pstatus", "famsize", "sex"
+
+Contingency table.
+
+- One-way
+```{r}
+table(data$combined$Pstatus)
+```
+For most of the data, we see that the parents live together.
+
+- Two-way
+```{r}
+table(data$combined$sex, data$combined$Pstatus)
+```
+Between sex, there seems to be little to no difference in parent's living together or apart.
+
+- Three-way
+```{r}
+table(data$combined$sex, data$combined$Pstatus, data$combined$famsize)
+```
+Surprisingly, the numbers for those with 3 children or greater are much higher than those 3 or less. The less than 3 children seems to have a higher ratio of parent's not living together.
+
+Conditional two-way table.
+
+- Method 1
+```{r}
+table(data$combined$sex, data$combined$famsize, data$combined$Pstatus)[1,,]
+```
+
+- Method 2
+```{r}
+with(data$combined |> filter(sex == "M"), table(famsize, Pstatus))
+```
+These two methods show the Female and Male counts of family size/parental living situation. Comparing the 2, the only major difference is the GT3 and LE3 for apart living parents flips. This doesn't necessarily mean anything, though.
+
+- Method 3
+```{r}
+plot_data <- data$combined |>
+  group_by(internet, famsize) |>
+  summarize(count = n()) |>
+  pivot_wider(names_from=internet, values_from=count)
+```
+The ratio of larger families having internet is much larger than that of smaller families.
+
+Stacked bar graph.
+```{r}
+ggplot(data$combined, aes(x = famsize, fill = internet)) + geom_bar() + labs(x="Family Size", y="Has Internet", title="Family Size to Internet Ratios", fill="Has Internet")
+```
+This graphically displays the previous comparison of family size and internet.
+```{r}
+ggplot(data$combined, aes(x = famsize, fill = internet)) + geom_bar(position="dodge") + labs(x="Family Size", y="Has Internet", title="Family Size to Internet Ratios", fill="Has Internet")
+```
+Finally a non-stacked version of the plot is shown.
+
+#### Numerical Variables
+<hr style="border: 2px solid black;" />
+> Variables: "age", "absences", "G1", "G2", "G3"
+
+- Measures of center and spread
+```{r}
+data$combined |>
+  select(age, starts_with("absences"), starts_with("G3")) |>
+  summarize(across(everything(), list("mean"=mean, "med"=median, "sd"=sd, "IQR"=IQR), .names = "{.fn}_{.col}")) |>
+  str()
+```
+This shows the mean, sd, and IQR of each numeric variable. The language class has a higher mean and smaller standard deviation than the math class for final grade.
+
+  - Repeated with subset of not having internet.
+```{r}
+data$combined |>
+  filter(internet == "no") |>
+  select(age, starts_with("absences"), starts_with("G3")) |>
+  summarize(across(everything(), list("mean"=mean, "med"=median, "sd"=sd, "IQR"=IQR), .names = "{.fn}_{.col}")) |>
+  str()
+```
+We see not having internet has had a negative effect. The means have gone down. The spread is wider.
+
+- Center and spread for a grouping of those with parents separated or not.
+```{r}
+data$combined |>
+  select(age, starts_with("absences"), starts_with("G3"), Pstatus) |>
+  group_by(Pstatus) |>
+  summarize(across(everything(), list("mean"=mean, "med"=median, "sd"=sd, "IQR"=IQR), .names = "{.fn}_{.col}")) |>
+  str()
+```
+It looks like parents separated or not has little effect on means but seems to increase the variability.
+
+- Center and spread, two grouping of internet (y/n) and parents (together,apart)
+```{r}
+data$combined |>
+  select(age, starts_with("absences"), starts_with("G3"), Pstatus, internet) |>
+  group_by(Pstatus, internet) |>
+  summarize(across(everything(), list("mean"=mean, "sd"=sd, "IQR"=IQR), .names = "{.fn}_{.col}")) |>
+  str()
+```
+The highest mean outcome seems to be parents apart and with internet. The variability generally goes down a bit too, but it depends on math vs language course.
+
+- Correlation matrix
+```{r}
+data$combined |>
+  select(age, starts_with("absences"), starts_with("G3")) |>
+  cor() |>
+  round(3)
+```
+The largest correlation effect to a final grade is age, but it is a minor negative correlation.
+
+- Plots
+  - Histogram
+```{r}
+ggplot(data$combined) +
+  geom_histogram(aes(x=G1_math, fill=internet), binwidth=1) +
+  labs(title="Math Score by Internet", x="Math Score", y="Count", fill="Internet")
+ggplot(data$combined) +
+  geom_histogram(aes(x=G1_lang, fill=internet), binwidth=1) +
+  labs(title="Language Score by Internet", x="Language Score", y="Count", fill="Internet")
+```
+Between the two plots of math and language, it looks like generally the scores are higher in language. It's hard to tell if internet had any effect.
+
+  - Kernel Density
+```{r}
+ggplot(data$combined) +
+  geom_density(aes(x=G2_math, fill=internet)) +
+  labs(title="Math Score by Internet", x="Math Score", y="Density", fill="Internet")
+ggplot(data$combined) +
+  geom_density(aes(x=G2_lang, fill=internet)) +
+  labs(title="Language Score by Internet", x="Language Score", y="Density", fill="Internet")
+```
+The same density plot of math vs language tell sthe same story (the axis shifted some). It's a little more clear from this plot that internet had a negative effect on math, but no clear effect on language.
+  
+  - Boxplot
+```{r}
+ggplot(data$combined) +
+  geom_boxplot(aes(y=G3_math, fill=internet)) +
+  labs(title="Math Score by Internet", x=NULL, y="Math Score", fill="Internet")
+ggplot(data$combined) +
+  geom_boxplot(aes(y=G3_lang, fill=internet)) +
+  labs(title="Language Score by Internet", x=NULL, y="Language Score", fill="Internet")
+```
+The boxplots show the same story, but a little better for language to see some slight negative effect of no internet and decreased variability.
+
+- ScatterPlots
+  - One - Absences in math to math score, colored by internet (y/n)
+```{r}
+ggplot(data$combined) +
+  geom_point(aes(x=absences_math, y=G3_math, color=internet), position="jitter") +
+  labs(title="Absences vs Math Score by (internet)", x="Absences", y="Math Score")
+```
+It does look like the higher absences may tend to be those with internet, but it's unclear from this what the score effect would be.
+
+  - Two - The same, but for language.
+```{r}
+ggplot(data$combined) +
+  geom_point(aes(x=absences_lang, y=G3_lang, color=internet), position="jitter") +
+  labs(title="Absences vs Language Score by (internet)", x="Absences", y="Language Score")
+```
+This agrees well with the previous view of higher absence holders are those with internet.
+
+- Faceting
+  - One - This takes a look at study time effect on score, covered over sex.
+```{r}
+ggplot(data$combined, aes(x=studytime, y=G3_math)) +
+  geom_point(position="jitter") +
+  geom_smooth(method="lm") +
+  facet_wrap(~ sex) +
+  labs(title="Study Time vs Math Score by (sex)", x="Study Time", y="Math Score")
+```
+There is not a clear effect either way. It's surprising to see study time is having such little effect.
+
+  - Two - The same as previous, but for language.
+```{r}
+ggplot(data$combined, aes(x=studytime, y=G3_lang)) +
+  geom_point(position="jitter") +
+  geom_smooth(method="lm") +
+  facet_wrap(~ sex) +
+  labs(title="Study Time vs Language Score by (sex)", x="Study Time", y="Language Score")
+```
+There seems to be a small positive effect of study time on language, but it does not visibly differ between sex.
+
+- Faceting again, but over 2 variables.
+  - The effect of having school support (y/n), and whether the address is urban/rural (U/R).
+```{r}
+ggplot(data$combined, aes(x=age, y=G3_math)) +
+  geom_point(position="jitter") +
+  geom_smooth(method="lm") +
+  facet_wrap(~ schoolsup + address) +
+  labs(title="Age vs Math Score by (school support and address)", x="Age", y="Math Score")
+```
+There seems to be a general downward trend on age. But having school support can help somewhat. The low data points item is unreliable (rural with support).
+
+  - The same as previous but for language.
+```{r}
+ggplot(data$combined, aes(x=age, y=G3_lang)) +
+  geom_point(position="jitter") +
+  geom_smooth(method="lm") +
+  facet_wrap(~ schoolsup + address) +
+  labs(title="Age vs Language Score by (school support and address)", x="Age", y="Language Score")
+```
+For language, it seems there may be a positive effect of urban vs rural, but not so much from school support.
