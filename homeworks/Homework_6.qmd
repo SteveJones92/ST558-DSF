@@ -65,6 +65,7 @@ resp_with_na
 ```{r}
 #| file: ../src/hw6/functions.R
 #| echo: false
+#| output: false
 ```
 
 ```{r}

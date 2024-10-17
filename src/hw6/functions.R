@@ -26,6 +26,7 @@ getMAE <- function(responses, predictions, ...) {
 }
 
 get_metrics <- function(responses, predictions, metrics="rmse,mae", ...) {
+  # takes in a numeric atomic vector of responses and predictions and returns a list of metrics (RMSE, MAE) as optionsgit
   if (!all(
     is.numeric(responses), is.numeric(predictions),
     is.atomic(responses), is.atomic(predictions),
@@ -36,12 +37,12 @@ get_metrics <- function(responses, predictions, metrics="rmse,mae", ...) {
 
   ret <- list()
   # RMSE
-  if (any(grepl("rmse", metrics, ignore.case=TRUE))) {
+  if (grepl("rmse", metrics, ignore.case=TRUE)) {
     RMSE <- getRMSE(responses, predictions, ...)
     ret$RMSE <- RMSE
   }
   # MAE
-  if (any(grepl("mae", metrics, ignore.case=TRUE))) {
+  if (grepl("mae", metrics, ignore.case=TRUE)) {
     MAE <- getMAE(responses, predictions, ...)
     ret$MAE <- MAE
   }
