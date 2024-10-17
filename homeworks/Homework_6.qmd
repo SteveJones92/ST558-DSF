@@ -1,0 +1,234 @@
+---
+title: "Homework 6"
+format: html
+editor: source
+---
+
+<hr style="border: 3px solid black;" />
+
+## Task 1: Conceptual Questions
+1. What is the purpose of the lapply() function? What is the equivalent purrr function?
+
+> lapply stands for list apply. It is used to apply a function to each list item, similar to having a for loop and running the function over each element in a list. The equivalent purrr function is map.
+
+2. Suppose we have a list called `my_list`. Each element of the list is a numeric data frame (all columns are numeric). We want to use `lapply()` to run the code `cor(numeric_matrix, method = "kendall")` on each element of the list. Write code to do this below! (I'm really trying to ask you how you specify `method = "kendall"` when calling `lapply()`)
+
+> lapply(my_list, cor, method = "kendall")
+
+3. What are two advantages of using `purrr` functions instead of the `BaseR` apply family?
+
+> purrr functions allow shorthand notation and are more consistent in their input/output.
+
+4. What is a side-effect function?
+
+> A side-effect function is one that performs an operation, some thing, but isn't really about manipulating data. A good example is simply printing something out. It wouldn't return data, but it uses the data. This is not very useful for chaining.
+
+5. Why can you name a variable **sd** in a function and not cause any issues with the **sd** function?
+
+> The scope inside the function is local to that function.
+
+<hr style="border: 3px solid black;" />
+
+## Task 2: Writing R Functions
+
+> Note* - Provided code will be used for multiple steps of Task 2
+
+```{r}
+#| file: ../src/hw6/provided_code.R
+```
+
+```{r}
+#| results: "hold"
+
+# show results of provided code
+n
+head(resp, 5)
+head(pred, 5)
+```
+
+```{r}
+#| results: "hold"
+
+# copy resp from provided code and put 2 NA_real_ values into the vector
+rand_idx <- sample(seq_along(resp), 2)
+resp_with_na <- resp
+resp_with_na[rand_idx] <- NA_real_
+resp
+resp_with_na
+```
+
+<hr style="border: 1px solid black;" />
+
+### TASKS
+
+1. RMSE function and simple test usage.
+```{r}
+#| file: ../src/hw6/functions.R
+#| echo: false
+```
+
+```{r}
+getRMSE
+```
+
+```{r}
+#| results: "hold"
+
+vec1 <- c(1, 2, 3, 4, 5)
+vec2 <- c(2, 3, 4, 5, 6)
+vec1_with_na <- c(1, 2, 3, 4, NA)
+vec2_with_na <- c(2, 3, NA, 5, 6)
+getRMSE(vec1, vec2)
+getRMSE(vec1_with_na, vec2_with_na, na.rm=TRUE)
+```
+
+2. Run provided code (already prepared) and test RMSE on resp and resp with NA's.
+
+
+```{r}
+#| results: "hold"
+
+getRMSE(resp, pred)
+getRMSE(resp_with_na, pred)
+getRMSE(resp_with_na, pred, na.rm=TRUE)
+```
+
+
+3. MAE function and simple test usage (reuse prior).
+```{r}
+getMAE
+```
+
+```{r}
+#| results: "hold"
+
+getMAE(vec1, vec2)
+getMAE(vec1_with_na, vec2_with_na, na.rm=TRUE)
+```
+
+4. Run the provided code (reuse already prepared) and test MAE on resp and resp with NA's.
+```{r}
+#| results: "hold"
+
+getMAE(resp, pred)
+getMAE(resp_with_na, pred)
+getMAE(resp_with_na, pred, na.rm=TRUE)
+```
+
+
+5. Wrapper function for either/both of MAE and RMSE and extra validation.
+```{r}
+get_metrics
+```
+
+6. Run the provided code (reuse already prepared) and test wrapper on resp, resp with NA's, various choice metrics, and invalid input.
+```{r}
+#| results: "hold"
+
+# both
+get_metrics(resp, pred)
+get_metrics(resp_with_na, pred)
+get_metrics(resp_with_na, pred, na.rm=TRUE)
+
+```
+
+```{r}
+#| results: "hold"
+
+# RMSE
+get_metrics(resp, pred, "rmse")
+get_metrics(resp_with_na, pred, "rmse")
+get_metrics(resp_with_na, pred, "rmse", na.rm=TRUE)
+
+```
+
+```{r}
+#| results: "hold"
+
+# MAE
+get_metrics(resp, pred, "mae")
+get_metrics(resp_with_na, pred, "mae")
+get_metrics(resp_with_na, pred, "mae", na.rm=TRUE)
+
+```
+
+```{r}
+#| results: "hold"
+
+# invalid input, giving dataframe
+df <- data.frame(pred, resp)
+# throws stop error, need try-to avoid error in render
+try(get_metrics(resp, df))
+try(get_metrics(df, pred))
+```
+
+<hr style="border: 3px solid black;" />
+
+## Task 3: Querying an API and a Tidy-Style Function
+
+```{r}
+#| echo: false
+
+API_KEY <- "ba25bdea09364eeabcb8c3683d81eb55"
+```
+
+#### Step 1-3: Create the GET request to the news API, get articles from the response, and build make a function for the operation of searching for news.
+
+```{r}
+# function created, with defaults as the interesting topic
+get_news_api_data
+```
+
+```{r}
+# resulting data, using default of esports articles
+data <- get_news_api_data(API_KEY)
+# print the top 5 titles
+head(data$title, 5)
+```
+
+4. Use the function twice to grab some data. Summarize the source field.
+
+```{r}
+csc_data <- get_news_api_data(API_KEY, subject="computer%20science")
+data_science_data <- get_news_api_data(API_KEY, subject="data%20science")
+
+# csc
+table(csc_data$source.name)
+# data science
+table(data_science_data$source.name)
+
+
+```
+
+5. Convert publishedAt columns to a date column. Sort by this column. Then create a pub_diff column that is a difference of the 2.
+
+```{r}
+# function made for doing this, also creates a better print string column for the 2
+get_dates_publish_diff
+```
+
+
+```{r}
+
+csc_data_dates <- get_dates_publish_diff(csc_data)
+ds_data_dates <- get_dates_publish_diff(data_science_data)
+
+csc_data_dates |>
+  select(source.name, publishedAt_str, pub_diff_str) |>
+  head(10)
+
+ds_data_dates |>
+  select(source.name, publishedAt_str, pub_diff_str) |>
+  head(10)
+```
+
+> Interesting, computer science results are less frequent than data science.
+
+6. Subset the variables for publishedAt and pub_diff and find the mean/med/sd of the columns using map.
+
+```{r}
+map(csc_data_dates |> select(publishedAt, pub_diff), \(x) list(mean=mean(x, na.rm=TRUE), median=median(x, na.rm=TRUE), sd=sd(x, na.rm=TRUE)))
+map(ds_data_dates |> select(publishedAt, pub_diff), \(x) list(mean=mean(x, na.rm=TRUE), median=median(x, na.rm=TRUE), sd=sd(x, na.rm=TRUE)))
+```
+
+> From looking at the results of the summary statistics, we see what generally looked true from the first 10 values at a glance. Data science must be more popular than computer science.
