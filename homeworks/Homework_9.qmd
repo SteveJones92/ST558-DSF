@@ -1,0 +1,244 @@
+---
+title: "Homework 9"
+format: html
+editor: source
+---
+
+```{r}
+#| echo: false
+#| output: false
+#| file: ../src/hw8/hw8.R
+```
+
+```{r}
+#| echo: false
+#| output: false
+library(tidyverse)
+library(rpart.plot)
+library(baguette)
+```
+
+<hr style="border: 3px solid black;" />
+
+## HW8 Outcome
+```{r}
+final_fit |>
+  extract_fit_parsnip() |>
+  tidy() |>
+  print(n=Inf)
+final_fit |> collect_metrics()
+```
+
+## LASSO
+
+#### LASSO engine - Mixture of 1 for LASSO
+```{r}
+LASSO_spec <- linear_reg(penalty = tune(), mixture=1) |>
+  set_engine("glmnet")
+```
+
+#### Reuse HW8 recipe 1 (all predictors, no interaction, no poly terms)
+```{r}
+LASSO_wkf <- workflow() |>
+  add_recipe(MLR_1) |>
+  add_model(LASSO_spec)
+LASSO_wkf
+```
+
+#### Tune the model, selecting the lowest RMSE found.
+```{r}
+LASSO_grid <- LASSO_wkf |>
+  tune_grid(resamples=bike_10_fold, grid=grid_regular(penalty(range=c(-4, 2)), levels=100))
+
+LASSO_grid |>
+  collect_metrics() |>
+  filter(.metric == "rmse") |>
+  ggplot(aes(penalty, mean, color= .metric)) +
+  geom_line()
+
+lowest_rmse <- LASSO_grid |>
+  select_best(metric = "rmse")
+lowest_rmse
+```
+
+#### Get the final outcome with the lowest RMSE value
+```{r}
+LASSO_final_fit <- LASSO_wkf |>
+  finalize_workflow(lowest_rmse) |>
+  last_fit(bike_split, metrics = metric_set(rmse, mae, rsq))
+
+LASSO_final_fit |>
+  extract_fit_parsnip() |>
+  tidy()
+
+LASSO_final_fit |>
+  collect_metrics()
+```
+
+
+
+## Regression Tree
+
+#### Same as before, select the model, then add it, using MLR_1
+```{r}
+REG_TREE_spec <- decision_tree(tree_depth = tune(), min_n = 20, cost_complexity = tune()) |>
+  set_engine("rpart") |>
+  set_mode ("regression")
+
+REG_TREE_wkf <- workflow() |>
+  add_recipe(MLR_1) |>
+  add_model(REG_TREE_spec)
+```
+
+#### Tune on depth and cost complexity, plot both.
+```{r}
+REG_TREE_grid <- REG_TREE_wkf |>
+  tune_grid(resamples=bike_10_fold, grid=grid_regular(cost_complexity(), tree_depth(), levels=c(10, 10)))
+
+REG_TREE_grid |>
+  collect_metrics() |>
+  filter(.metric == "rmse") |>
+  ggplot(aes(x=tree_depth, y=mean, color=.metric)) +
+  geom_line()
+
+REG_TREE_grid |>
+  collect_metrics() |>
+  filter(.metric == "rmse") |>
+  ggplot(aes(x=cost_complexity, y=mean, color=.metric)) +
+  geom_line()
+```
+
+#### Select lowest of both
+```{r}
+lowest_rmse <- REG_TREE_grid |>
+    select_best(metric = "rmse")
+lowest_rmse
+```
+
+#### Final fit
+```{r}
+REG_TREE_final_fit <- REG_TREE_wkf |>
+    finalize_workflow(lowest_rmse) |>
+    last_fit(bike_split, metrics = metric_set(rmse, mae, rsq))
+```
+
+#### Outcome
+```{r}
+tree_final_model <- extract_workflow(REG_TREE_final_fit)
+tree_final_model |>
+  extract_fit_engine() |>
+  rpart.plot::rpart.plot(roundint = FALSE)
+REG_TREE_final_fit |>
+  collect_metrics()
+```
+
+## Bagged Tree
+
+#### Same as before, select the model, then add it, using MLR_1
+```{r}
+BAG_TREE_spec <- bag_tree(tree_depth = 5, min_n = 10, cost_complexity = tune()) |>
+  set_engine("rpart") |>
+  set_mode("regression")
+
+BAG_TREE_wkf <- workflow() |>
+  add_recipe(MLR_1) |>
+  add_model(BAG_TREE_spec)
+```
+
+#### Tune on cost complexity, plot both.
+```{r}
+BAG_TREE_grid <- BAG_TREE_wkf |>
+  tune_grid(resamples = bike_10_fold, grid=grid_regular(cost_complexity(range = c(-5, -1)), levels=15), metrics = metric_set(rmse))
+
+BAG_TREE_grid |>
+  collect_metrics() |>
+  filter(.metric == "rmse") |>
+  ggplot(aes(x=cost_complexity, y=mean, color=.metric)) +
+  geom_line()
+```
+
+#### Select lowest
+```{r}
+lowest_rmse <- BAG_TREE_grid |>
+  select_best(metric = "rmse")
+
+lowest_rmse
+```
+
+#### Final fit
+```{r}
+BAG_TREE_final_fit <- BAG_TREE_wkf |>
+    finalize_workflow(lowest_rmse) |>
+    last_fit(bike_split, metrics = metric_set(rmse, mae, rsq))
+```
+
+#### Outcome
+```{r}
+BAG_TREE_final_fit |>
+    collect_metrics()
+```
+
+
+## Random Forest
+
+#### Same as before, select the model, then add it, using MLR_1
+```{r}
+RF_spec <- rand_forest(mtry = tune()) |>
+  set_engine("ranger") |>
+  set_mode("regression")
+
+RF_wkf <- workflow() |>
+  add_recipe(MLR_1) |>
+  add_model(RF_spec)
+```
+
+#### Tune on cost complexity, plot both.
+```{r}
+RF_grid <- RF_wkf |>
+    tune_grid(resamples = bike_10_fold, grid = 10, metrics = metric_set(rmse))
+RF_grid |>
+  collect_metrics() |>
+  filter(.metric == "rmse") |>
+  ggplot(aes(x=mtry, y=mean, color=.metric)) +
+  geom_line()
+```
+
+#### Select lowest
+```{r}
+lowest_rmse <- RF_grid |>
+    select_best(metric = "rmse")
+lowest_rmse
+```
+
+#### Final fit
+```{r}
+RF_final_fit <- RF_wkf |>
+    finalize_workflow(lowest_rmse) |>
+    last_fit(bike_split, metrics = metric_set(rmse, mae, rsq))
+```
+
+#### Outcome
+```{r}
+RF_final_fit |>
+    collect_metrics()
+```
+
+## Compare All
+
+#### Print all the metrics together
+```{r}
+# MLR
+final_fit |> collect_metrics()
+LASSO_final_fit |>
+  collect_metrics()
+REG_TREE_final_fit |>
+  collect_metrics()
+BAG_TREE_final_fit |>
+    collect_metrics()
+RF_final_fit |>
+    collect_metrics()
+```
+
+#### Random forest is the best model. It has the lowest RMSE and MAE, and also the highest R^2. Fit the final overall model using the random forest.
+
+

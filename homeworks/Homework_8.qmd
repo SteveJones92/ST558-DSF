@@ -1,0 +1,186 @@
+---
+title: "Homework 8"
+format: html
+editor: source
+---
+
+<hr style="border: 3px solid black;" />
+
+# Note: HW8 was unsubmitted, this comes from referencing the HW8 Key
+
+```{r}
+#| output: false
+library(dplyr)
+library(lubridate)
+library(tidymodels)
+```
+
+## Reading Data
+
+```{r}
+URL <- "https://www4.stat.ncsu.edu/~online/datasets/SeoulBikeData.csv"
+data <- read.csv(URL, header = TRUE, fileEncoding="latin1")
+```
+
+## Basic EDA
+
+#### Count of NA values (looks good)
+
+```{r}
+sum(is.na(data))
+```
+
+#### Fix data, everything is numeric except for Date (Date), Seasons (factor), Holiday (factor), Functioning.Day (factor)
+
+```{r}
+data_fixed <- data |>
+  mutate(
+    Date = lubridate::dmy(Date),
+    across(where(is.character), as.factor)
+  ) |>
+  rename(
+    date = Date,
+    rented_bike_count = Rented.Bike.Count,
+    hour = Hour,
+    temp_c = Temperature..C.,
+    humidity = Humidity...,
+    wind_speed_m_s = Wind.speed..m.s.,
+    visibility_10m = Visibility..10m.,
+    dew_point_temp_c = Dew.point.temperature..C.,
+    solar_radiation_mj_m2 = Solar.Radiation..MJ.m2.,
+    rainfall_mm = Rainfall.mm.,
+    snowfall_cm = Snowfall..cm.,
+    seasons = Seasons,
+    holiday = Holiday,
+    functioning_day = Functioning.Day
+  ) |>
+  filter(functioning_day == "Yes") |>
+  select(-functioning_day)
+```
+
+#### Make sure there are no issues left over. Look at summary values.
+
+```{r}
+str(data_fixed)
+summary(data_fixed)
+```
+
+#### Capture all the values as days grouped, which will be the final used data.
+
+```{r}
+bike_data <- data_fixed |>
+  group_by(date, seasons, holiday) |>
+  summarize(
+    rented_bike_count = sum(rented_bike_count),
+    temp_c = mean(temp_c),
+    humidity = mean(humidity),
+    wind_speed_m_s = mean(wind_speed_m_s),
+    visibility_10m = mean(visibility_10m),
+    dew_point_temp_c = mean(dew_point_temp_c),
+    solar_radiation_mj_m2 = mean(solar_radiation_mj_m2),
+    rainfall_mm = sum(rainfall_mm),
+    snowfall_cm = sum(snowfall_cm)
+  ) |>
+  ungroup()
+
+str(bike_data)
+summary(bike_data)
+```
+
+## Splitting Data
+
+#### Set up the splits, additinally add the strata for the split to the folds themselves.
+
+```{r}
+set.seed(11)
+bike_split <- initial_split(bike_data, prop = 0.75, strata = seasons)
+bike_train <- training(bike_split)
+bike_test <- testing(bike_split)
+bike_10_fold <- vfold_cv(bike_train, v = 10, strata = seasons)
+```
+
+## Linear Regression
+
+#### First recipe - using all predictor values, using date as weekday and weekend.
+
+```{r}
+MLR_1 <- recipe(rented_bike_count ~ ., data = bike_train) |>
+  step_date(date, features = "dow") |>
+  step_mutate(day_type = factor(ifelse(date_dow %in% c("Sat", "Sun"), "Weekend", "Weekday"))) |>
+  step_rm(date, date_dow) |>
+  step_dummy(seasons, holiday, day_type) |>
+  step_normalize(all_numeric(), -rented_bike_count)
+```
+
+#### Second recipe - adding in interaction terms.
+
+```{r}
+MLR_2 <- MLR_1 |>
+  step_interact(
+    terms = ~starts_with("seasons") * starts_with("holiday") +
+    starts_with("seasons") * temp_c + rainfall_mm * temp_c)
+```
+
+#### Third recipe - adding in polynomial terms.
+
+```{r}
+MLR_3 <- MLR_2 |>
+  step_poly(temp_c, wind_speed_m_s, visibility_10m, dew_point_temp_c, solar_radiation_mj_m2, rainfall_mm, snowfall_cm, degree = 2)
+```
+
+#### Setting engine for MLR
+
+```{r}
+MLR_spec <- linear_reg() |>
+  set_engine("lm")
+```
+
+## Fitting Model, Predicting, RMSE
+
+#### CV for all models
+
+```{r}
+MLR_CV_fit1 <- workflow() |>
+  add_recipe(MLR_1) |>
+  add_model(MLR_spec) |>
+  fit_resamples(resamples = bike_10_fold)
+
+MLR_CV_fit2 <- workflow() |>
+  add_recipe(MLR_2) |>
+  add_model(MLR_spec) |>
+  fit_resamples(resamples = bike_10_fold)
+
+MLR_CV_fit3 <- workflow() |>
+  add_recipe(MLR_3) |>
+  add_model(MLR_spec) |>
+  fit_resamples(resamples = bike_10_fold)
+```
+
+#### Metrics between them.
+
+```{r}
+rbind(
+  MLR_CV_fit1 |> collect_metrics(),
+  MLR_CV_fit2 |> collect_metrics(),
+  MLR_CV_fit3 |> collect_metrics()
+)
+```
+
+#### Last metric for model 3, interactions and poly terms, has lowest RMSE and highest R\^2
+
+```{r}
+final_fit <- workflow() |>
+  add_recipe(MLR_3) |>
+  add_model(MLR_spec) |>
+  last_fit(bike_split)
+final_fit |> collect_metrics()
+```
+
+#### Summary
+
+```{r}
+final_fit |>
+  extract_fit_parsnip() |>
+  tidy() |>
+  print(n=Inf)
+```

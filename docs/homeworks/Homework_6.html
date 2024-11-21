@@ -140,6 +140,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link active" href="../homeworks/Homework_6.html" aria-current="page"> 
 <span class="menu-text">Homework 6</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../homeworks/Homework_7.html"> 
+<span class="menu-text">Homework 7</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../homeworks/Homework_8.html"> 
+<span class="menu-text">Homework 8</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../homeworks/Homework_9.html"> 
+<span class="menu-text">Homework 9</span></a>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
           <div class="quarto-navbar-tools">
@@ -363,7 +375,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>get_metrics</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>function(responses, predictions, metrics="rmse,mae", ...) {
-  # takes in a numeric atomic vector of responses and predictions and returns a list of metrics (RMSE, MAE) as options
+  # takes in a numeric atomic vector of responses and predictions and returns a list of metrics (RMSE, MAE) as optionsgit
   if (!all(
     is.numeric(responses), is.numeric(predictions),
     is.atomic(responses), is.atomic(predictions),
@@ -466,6 +478,8 @@ Error in get_metrics(df, pred) :
 </section>
 <section id="task-3-querying-an-api-and-a-tidy-style-function" class="level2">
 <h2 class="anchored" data-anchor-id="task-3-querying-an-api-and-a-tidy-style-function">Task 3: Querying an API and a Tidy-Style Function</h2>
+<section id="note-api-key-inactive" class="level3">
+<h3 class="anchored" data-anchor-id="note-api-key-inactive">Note: API KEY inactive</h3>
 <section id="step-1-3-create-the-get-request-to-the-news-api-get-articles-from-the-response-and-build-make-a-function-for-the-operation-of-searching-for-news." class="level4">
 <h4 class="anchored" data-anchor-id="step-1-3-create-the-get-request-to-the-news-api-get-articles-from-the-response-and-build-make-a-function-for-the-operation-of-searching-for-news.">Step 1-3: Create the GET request to the news API, get articles from the response, and build make a function for the operation of searching for news.</h4>
 <div class="cell">
@@ -490,11 +504,7 @@ Error in get_metrics(df, pred) :
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># print the top 5 titles</span></span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data<span class="sc">$</span>title, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Opportunity Knocks For India's Esports Athletes To Compete At FIFAe WC"                                    
-[2] "東京メトロ第3回 TOKYO METRO CUP OVERWATCH 2を開催します！"                                                 
-[3] "No Controllers Allowed! Malaysia Hosts APAC Predator League 2025. Get your tickets with exclusive goodies!"
-[4] "Can an AI coach help your esports team clinch the championship?"                                           
-[5] "Dragon Ball: Sparking! Zero reporta ventas millonarias en un día"                                          </code></pre>
+<pre><code>NULL</code></pre>
 </div>
 </div>
 <ol start="4" type="1">
@@ -507,242 +517,12 @@ Error in get_metrics(df, pred) :
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># csc</span></span>
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(csc_data<span class="sc">$</span>source.name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-                                         [Removed] 
-                                                 3 
-                                          ABC News 
-                                                 4 
-                                         Acast.com 
-                                                 1 
-                                           Acm.org 
-                                                 2 
-                                      Adafruit.com 
-                                                16 
-                                        Amazon.com 
-                                                 2 
-                                       AndroidGuys 
-                                                 1 
-                             Bengreenfieldlife.com 
-                                                 1 
-                                       Blog.google 
-                                                 1 
-                                            blogTO 
-                                                 1 
-                                 Business Standard 
-                                                 1 
-                                          CBC News 
-                                                 1 
-                                          CBS News 
-                                                 1 
-                                              CNET 
-                                                 2 
-                                         Digitimes 
-                                                 1 
-                                 Economictimes.com 
-                                                 1 
-                                    ETF Daily News 
-                                                 2 
-                                            Forbes 
-                                                 6 
-                                           Fortune 
-                                                 2 
-                                  Freerepublic.com 
-                                                 1 
-                           Futurity: Research News 
-                                                 1 
-                                     GlobeNewswire 
-                                                 4 
-                                          Habr.com 
-                                                 2 
-Harvard School of Engineering and Applied Sciences 
-                                                 1 
-                                     Investing.com 
-                                                 2 
-                                       Lillian.com 
-                                                 1 
-                                          Livemint 
-                                                 1 
-                                         Lse.ac.uk 
-                                                 1 
-                                Medical News Today 
-                                                 1 
-                                Messynessychic.com 
-                                                 1 
-                                Mindtheproduct.com 
-                                                 1 
-                             MIT Technology Review 
-                                                 1 
-                                           Mit.edu 
-                                                 1 
-                                         Msurya.in 
-                                                 1 
-                                              NASA 
-                                                 1 
-                     National Institutes of Health 
-                                                 4 
-                                          NBC News 
-                                                 1 
-                                New Zealand Herald 
-                                                 1 
-                                          Newsweek 
-                                                 1 
-                                   Next Big Future 
-                                                 1 
-                                     Nlppeople.com 
-                                                 1 
-                                          Plos.org 
-                                                 3 
-                                          PoPville 
-                                                 1 
-                               Retractionwatch.com 
-                                                 1 
-                                      Ritholtz.com 
-                                                 1 
-                                     Science Daily 
-                                                 3 
-                               Scientific American 
-                                                 2 
-                                     seattlepi.com 
-                                                 1 
-                              Sqlservercentral.com 
-                                                 1 
-                               Süddeutsche Zeitung 
-                                                 2 
-                                      The Atlantic 
-                                                 1 
-                                The Times of India 
-                                                 1 
-                                         The Verge 
-                                                 1 
-                                          TheBlaze 
-                                                 1 
-                                   TheStranger.com 
-                                                 1 
-                                             Wired 
-                                                 1 </code></pre>
+<pre><code>&lt; table of extent 0 &gt;</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data science</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data_science_data<span class="sc">$</span>source.name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-                                         [Removed] 
-                                                 8 
-                                          ABC News 
-                                                 4 
-                                     ABC News (AU) 
-                                                 2 
-                                           Acm.org 
-                                                 1 
-                                        Amazon.com 
-                                                 1 
-                               Americanthinker.com 
-                                                 1 
-                             Bloodinthemachine.com 
-                                                 1 
-                                  Business Insider 
-                                                 1 
-                                 Business Standard 
-                                                 1 
-                                      BusinessLine 
-                                                 1 
-                            Catholicnewsagency.com 
-                                                 1 
-                                        CBS Sports 
-                                                 1 
-                                     CleanTechnica 
-                                                 1 
-                                            Crikey 
-                                                 1 
-                                    ETF Daily News 
-                                                 4 
-                                    Financial Post 
-                                                 2 
-                                            Forbes 
-                                                 3 
-                                          Futurism 
-                                                 1 
-                                     GlobeNewswire 
-                                                 6 
-                                          Habr.com 
-                                                 1 
-Harvard School of Engineering and Applied Sciences 
-                                                 1 
-                               Hurriyet Daily News 
-                                                 1 
-                                     Investing.com 
-                                                 8 
-                                   Lewrockwell.com 
-                                                 1 
-                                       Mercola.com 
-                                                 1 
-                                Mindtheproduct.com 
-                                                 1 
-                                           Mit.edu 
-                                                 2 
-                                      Ms. Magazine 
-                                                 1 
-                                              NASA 
-                                                 1 
-                                         NDTV News 
-                                                 1 
-                                         New Atlas 
-                                                 1 
-                                          Newsweek 
-                                                 2 
-                                     Nlppeople.com 
-                                                 2 
-                                        Nvidia.com 
-                                                 1 
-                                      OilPrice.com 
-                                                 1 
-                                    Pauljorion.com 
-                                                 1 
-                                    PR Newswire UK 
-                                                 1 
-                              Princeton University 
-                                                 1 
-                                      Pycoders.com 
-                                                 1 
-                                     Science Daily 
-                                                 1 
-                                      ScienceAlert 
-                                                 2 
-                                     seattlepi.com 
-                                                 2 
-                              Sqlservercentral.com 
-                                                 1 
-                                     Statetimes.in 
-                                                 1 
-                                           The BMJ 
-                                                 5 
-                           The Conversation Africa 
-                                                 2 
-                            The National Interest  
-                                                 1 
-                                  The New Republic 
-                                                 1 
-                                The Times of India 
-                                                 2 
-                                       Tistory.com 
-                                                 1 
-                                   Trendhunter.com 
-                                                 1 
-                                        Tubefilter 
-                                                 2 
-                                 Twistedsifter.com 
-                                                 1 
-                                         Upenn.edu 
-                                                 1 
-                                               Vox 
-                                                 1 
-                                Washington Monthly 
-                                                 1 
-                                        Www.gov.uk 
-                                                 1 
-                                         Www.vg.no 
-                                                 1 
-                               Yahoo Entertainment 
-                                                 1 </code></pre>
+<pre><code>&lt; table of extent 0 &gt;</code></pre>
 </div>
 </div>
 <ol start="5" type="1">
@@ -764,41 +544,16 @@ Harvard School of Engineering and Applied Sciences
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>csc_data_dates <span class="ot">&lt;-</span> <span class="fu">get_dates_publish_diff</span>(csc_data)</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>ds_data_dates <span class="ot">&lt;-</span> <span class="fu">get_dates_publish_diff</span>(data_science_data)</span>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># csc_data_dates &lt;- get_dates_publish_diff(csc_data)</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ds_data_dates &lt;- get_dates_publish_diff(data_science_data)</span></span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>csc_data_dates <span class="sc">|&gt;</span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(source.name, publishedAt_str, pub_diff_str) <span class="sc">|&gt;</span></span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>            source.name     publishedAt_str pub_diff_str
-1         Investing.com 2024-10-16 01:12:05         &lt;NA&gt;
-2        ETF Daily News 2024-10-16 00:44:05     00:28:00
-3             Acast.com 2024-10-16 00:00:49     00:43:16
-4    Mindtheproduct.com 2024-10-16 00:00:00     00:00:49
-5     Economictimes.com 2024-10-15 23:58:31     00:01:29
-6              TheBlaze 2024-10-15 21:14:55     02:43:36
-7          Adafruit.com 2024-10-15 21:05:24     00:09:31
-8     Business Standard 2024-10-15 21:04:32     00:00:52
-9             [Removed] 2024-10-15 19:36:35     01:27:57
-10 Sqlservercentral.com 2024-10-15 19:00:52     00:35:43</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>ds_data_dates <span class="sc">|&gt;</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(source.name, publishedAt_str, pub_diff_str) <span class="sc">|&gt;</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>             source.name     publishedAt_str pub_diff_str
-1           ScienceAlert 2024-10-16 01:33:59         &lt;NA&gt;
-2           ScienceAlert 2024-10-16 01:33:59     00:00:00
-3         ETF Daily News 2024-10-16 01:33:00     00:00:59
-4          Statetimes.in 2024-10-16 01:31:32     00:01:28
-5         ETF Daily News 2024-10-16 01:16:54     00:14:38
-6          Investing.com 2024-10-16 01:12:05     00:04:49
-7              New Atlas 2024-10-16 01:07:02     00:05:03
-8  Bloodinthemachine.com 2024-10-16 00:47:02     00:20:00
-9         ETF Daily News 2024-10-16 00:44:05     00:02:57
-10        ETF Daily News 2024-10-16 00:43:27     00:00:38</code></pre>
-</div>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># csc_data_dates |&gt;</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   select(source.name, publishedAt_str, pub_diff_str) |&gt;</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   head(10)</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="co"># ds_data_dates |&gt;</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   select(source.name, publishedAt_str, pub_diff_str) |&gt;</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   head(10)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <blockquote class="blockquote">
 <p>Interesting, computer science results are less frequent than data science.</p>
@@ -807,58 +562,15 @@ Harvard School of Engineering and Applied Sciences
 <li>Subset the variables for publishedAt and pub_diff and find the mean/med/sd of the columns using map.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(csc_data_dates <span class="sc">|&gt;</span> <span class="fu">select</span>(publishedAt, pub_diff), \(x) <span class="fu">list</span>(<span class="at">mean=</span><span class="fu">mean</span>(x, <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="at">median=</span><span class="fu">median</span>(x, <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="at">sd=</span><span class="fu">sd</span>(x, <span class="at">na.rm=</span><span class="cn">TRUE</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>$publishedAt
-$publishedAt$mean
-[1] "2024-10-15 15:57:12 UTC"
-
-$publishedAt$median
-[1] "2024-10-15 15:11:47 UTC"
-
-$publishedAt$sd
-[1] 20163
-
-
-$pub_diff
-$pub_diff$mean
-Time difference of 843.2323 secs
-
-$pub_diff$median
-Time difference of 359 secs
-
-$pub_diff$sd
-[1] 1360.857</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">map</span>(ds_data_dates <span class="sc">|&gt;</span> <span class="fu">select</span>(publishedAt, pub_diff), \(x) <span class="fu">list</span>(<span class="at">mean=</span><span class="fu">mean</span>(x, <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="at">median=</span><span class="fu">median</span>(x, <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="at">sd=</span><span class="fu">sd</span>(x, <span class="at">na.rm=</span><span class="cn">TRUE</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>$publishedAt
-$publishedAt$mean
-[1] "2024-10-16 00:04:33 UTC"
-
-$publishedAt$median
-[1] "2024-10-15 23:18:52 UTC"
-
-$publishedAt$sd
-[1] 14135.55
-
-
-$pub_diff
-$pub_diff$mean
-Time difference of 438.7778 secs
-
-$pub_diff$median
-Time difference of 209 secs
-
-$pub_diff$sd
-[1] 556.8747</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># map(csc_data_dates |&gt; select(publishedAt, pub_diff), \(x) list(mean=mean(x, na.rm=TRUE), median=median(x, na.rm=TRUE), sd=sd(x, na.rm=TRUE)))</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co"># map(ds_data_dates |&gt; select(publishedAt, pub_diff), \(x) list(mean=mean(x, na.rm=TRUE), median=median(x, na.rm=TRUE), sd=sd(x, na.rm=TRUE)))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <blockquote class="blockquote">
 <p>From looking at the results of the summary statistics, we see what generally looked true from the first 10 values at a glance. Data science must be more popular than computer science.</p>
 </blockquote>
 
 
+</section>
 </section>
 </section>
 

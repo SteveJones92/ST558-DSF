@@ -169,9 +169,10 @@ try(get_metrics(df, pred))
 
 ```{r}
 #| echo: false
-
 API_KEY <- "ba25bdea09364eeabcb8c3683d81eb55"
 ```
+
+### Note: API KEY inactive
 
 #### Step 1-3: Create the GET request to the news API, get articles from the response, and build make a function for the operation of searching for news.
 
@@ -208,19 +209,17 @@ table(data_science_data$source.name)
 get_dates_publish_diff
 ```
 
-
 ```{r}
+# csc_data_dates <- get_dates_publish_diff(csc_data)
+# ds_data_dates <- get_dates_publish_diff(data_science_data)
 
-csc_data_dates <- get_dates_publish_diff(csc_data)
-ds_data_dates <- get_dates_publish_diff(data_science_data)
-
-csc_data_dates |>
-  select(source.name, publishedAt_str, pub_diff_str) |>
-  head(10)
-
-ds_data_dates |>
-  select(source.name, publishedAt_str, pub_diff_str) |>
-  head(10)
+# csc_data_dates |>
+#   select(source.name, publishedAt_str, pub_diff_str) |>
+#   head(10)
+#
+# ds_data_dates |>
+#   select(source.name, publishedAt_str, pub_diff_str) |>
+#   head(10)
 ```
 
 > Interesting, computer science results are less frequent than data science.
@@ -228,8 +227,8 @@ ds_data_dates |>
 6. Subset the variables for publishedAt and pub_diff and find the mean/med/sd of the columns using map.
 
 ```{r}
-map(csc_data_dates |> select(publishedAt, pub_diff), \(x) list(mean=mean(x, na.rm=TRUE), median=median(x, na.rm=TRUE), sd=sd(x, na.rm=TRUE)))
-map(ds_data_dates |> select(publishedAt, pub_diff), \(x) list(mean=mean(x, na.rm=TRUE), median=median(x, na.rm=TRUE), sd=sd(x, na.rm=TRUE)))
+# map(csc_data_dates |> select(publishedAt, pub_diff), \(x) list(mean=mean(x, na.rm=TRUE), median=median(x, na.rm=TRUE), sd=sd(x, na.rm=TRUE)))
+# map(ds_data_dates |> select(publishedAt, pub_diff), \(x) list(mean=mean(x, na.rm=TRUE), median=median(x, na.rm=TRUE), sd=sd(x, na.rm=TRUE)))
 ```
 
 > From looking at the results of the summary statistics, we see what generally looked true from the first 10 values at a glance. Data science must be more popular than computer science.

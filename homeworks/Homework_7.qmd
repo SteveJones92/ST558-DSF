@@ -1,0 +1,9 @@
+---
+title: "Homework 7"
+format: html
+editor: source
+---
+
+<hr style="border: 3px solid black;" />
+
+## Separate HW - No Quarto
