@@ -134,9 +134,6 @@ BAG_TREE_final_fit <- BAG_TREE_wkf |>
     finalize_workflow(lowest_rmse) |>
     last_fit(bike_split, metrics = metric_set(rmse, mae, rsq))
 
-# extract fit engine and $imp for variable importance
-# plot
-
 
 BAG_TREE_final_model <- extract_fit_engine(BAG_TREE_final_fit)
 BAG_TREE_final_model$imp |>
@@ -152,7 +149,7 @@ BAG_TREE_final_fit |>
 # need tuned random forest
 
 RF_spec <- rand_forest(mtry = tune()) |>
-  set_engine("ranger") |>
+  set_engine("ranger", importance="impurity") |>
   set_mode("regression")
 
 RF_wkf <- workflow() |>
@@ -176,7 +173,27 @@ RF_final_fit <- RF_wkf |>
     finalize_workflow(lowest_rmse) |>
     last_fit(bike_split, metrics = metric_set(rmse, mae, rsq))
 
+RF_final_model <- extract_fit_engine(RF_final_fit)
+importance_values <- RF_final_model$variable.importance
+importance_df <- data.frame(
+  term = names(importance_values),
+  value = importance_values
+) |>
+  as_tibble() |>
+  arrange(desc(value))
+
+importance_df |>
+  mutate(term = factor(term, levels = term)) |>
+  ggplot(aes(x=term, y=value)) +
+  geom_bar(stat = "identity") +
+  coord_flip()
+
 RF_final_fit |>
     collect_metrics()
 
-
+final_model <- workflow() |>
+  add_recipe(MLR_1) |>
+  add_model(RF_spec) |>
+  finalize_workflow(lowest_rmse) |>
+  fit(bike_data)
+final_model

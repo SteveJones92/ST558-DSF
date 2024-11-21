@@ -105,9 +105,8 @@ final_fit <- workflow() |>
   add_recipe(MLR_3) |>
   add_model(MLR_spec) |>
   last_fit(bike_split)
+final_fit |> collect_metrics()
 
 final_fit |>
   extract_fit_parsnip() |>
   tidy()
-
-final_fit |> collect_metrics()
