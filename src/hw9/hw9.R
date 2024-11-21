@@ -138,6 +138,13 @@ BAG_TREE_final_fit <- BAG_TREE_wkf |>
 # plot
 
 
+BAG_TREE_final_model <- extract_fit_engine(BAG_TREE_final_fit)
+BAG_TREE_final_model$imp |>
+  mutate(term = factor(term, levels = term)) |>
+  ggplot(aes(x=term, y=value)) +
+  geom_bar(stat = "identity") +
+  coord_flip()
+
 BAG_TREE_final_fit |>
     collect_metrics()
 
